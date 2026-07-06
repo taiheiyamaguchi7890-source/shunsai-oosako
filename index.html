@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>旬彩 大迫 | 浅草の居酒屋</title>
+  <meta name="description" content="旬彩 大迫 — 浅草・台東区に2026年5月開業。旬の食材と厳選した日本酒・焼酎を、静かな空間でお楽しみください。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── VARIABLES ─────────────────────────────────────────── */
+    :root {
+      --font-serif: 'Noto Serif JP', 'Yu Mincho', serif;
+      --font-sans:  'Noto Sans JP', 'Yu Gothic', sans-serif;
+
+      --bg:         #141210;
+      --bg-mid:     #1c1914;
+      --bg-light:   #242018;
+      --bg-card:    #1e1b16;
+
+      --gold:       #c5a05a;
+      --gold-light: #d4b47a;
+      --gold-dim:   rgba(197,160,90,0.25);
+      --gold-rule:  rgba(197,160,90,0.2);
+
+      --text:       #e8e0d4;
+      --text-mid:   #9a8c7c;
+      --text-dim:   rgba(232,224,212,0.38);
+
+      --border:     rgba(197,160,90,0.18);
+      --white:      #faf6ef;
+
+      --nav-h:      64px;
+      --max-w:      900px;
+      --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ─── RESET ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    img  { display: block; max-width: 100%; }
+    a    { color: inherit; text-decoration: none; }
+
+    body {
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.8;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: var(--nav-h);
+      display: flex;
+      align-items: center;
+      transition: background 0.4s var(--ease), border-color 0.4s var(--ease),
+                  box-shadow 0.4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+
+    #nav.scrolled {
+      background: rgba(14,12,10,0.96);
+      border-color: var(--border);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      color: var(--gold-light);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--text-mid);
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0; right: 0;
+      height: 1px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.25s var(--ease);
+      transform-origin: left;
+    }
+
+    .nav-links a:hover { color: var(--gold-light); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .nav-cta {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      border: 1px solid var(--gold-rule);
+      padding: 0.45em 1.2em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-dim);
+      color: var(--gold-light);
+    }
+
+    /* hamburger (mobile) */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--text-mid);
+      transition: all 0.3s var(--ease);
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      width: 100%; height: 100%;
+      opacity: 0.28;
+      transform: scale(1.04);
+      animation: heroZoom 14s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.00); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(14,12,10,0.3) 0%, rgba(14,12,10,0.6) 100%),
+        radial-gradient(ellipse at 50% 40%, rgba(197,160,90,0.06) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      text-align: center;
+      padding: 0 1.5rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      border-top: 1px solid var(--gold-rule);
+      border-bottom: 1px solid var(--gold-rule);
+      padding: 0.5em 1.6em;
+      margin-bottom: 2.4rem;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-title .ruby {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.55em;
+      color: var(--gold-light);
+      font-weight: 300;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title .kanji {
+      display: block;
+      font-size: clamp(3.2rem, 9vw, 5.6rem);
+      letter-spacing: 0.18em;
+      line-height: 1.1;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+    }
+
+    .hero-catch {
+      font-size: clamp(0.75rem, 2vw, 0.88rem);
+      letter-spacing: 0.3em;
+      color: rgba(232,224,212,0.55);
+      margin-bottom: 3.5rem;
+      font-weight: 300;
+    }
+
+    .hero-scroll {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--gold-light);
+      opacity: 0.7;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold-light), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      50.1%{ transform: scaleY(1); transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ─── SECTION COMMON ─────────────────────────────────────── */
+    section { padding: 7rem 2rem; }
+
+    .section-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-en {
+      display: block;
+      font-size: 0.62rem;
+      letter-spacing: 0.48em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      font-family: var(--font-sans);
+    }
+
+    .section-head h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .section-rule {
+      display: block;
+      width: 36px; height: 1px;
+      background: var(--gold);
+      margin: 1.4rem auto 0;
+    }
+
+    /* ─── FADE-IN (IntersectionObserver) ────────────────────── */
+    .fade {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+    .fade.delay-1 { transition-delay: 0.1s; }
+    .fade.delay-2 { transition-delay: 0.2s; }
+    .fade.delay-3 { transition-delay: 0.3s; }
+    .fade.delay-4 { transition-delay: 0.4s; }
+
+    .fade.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── CONCEPT ────────────────────────────────────────────── */
+    #concept { background: var(--bg-mid); }
+
+    .concept-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .concept-img-wrap {
+      position: relative;
+    }
+
+    .concept-img-wrap img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .concept-img-wrap::before {
+      content: '';
+      position: absolute;
+      top: -12px; left: -12px;
+      right: 12px; bottom: 12px;
+      border: 1px solid var(--gold-rule);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .concept-text {
+      font-family: var(--font-serif);
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 2.5;
+      letter-spacing: 0.06em;
+      color: rgba(232,224,212,0.8);
+    }
+
+    .concept-text p + p { margin-top: 1.8rem; }
+
+    .concept-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2.2rem;
+    }
+
+    .concept-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      border: 1px solid var(--gold-rule);
+      padding: 0.3em 0.9em;
+    }
+
+    /* ─── KODAWARI ───────────────────────────────────────────── */
+    #kodawari { background: var(--bg); }
+
+    .kodawari-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .kodawari-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .kodawari-item:hover {
+      border-color: rgba(197,160,90,0.45);
+      transform: translateY(-3px);
+    }
+
+    .kodawari-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.82;
+      transition: opacity 0.3s;
+    }
+
+    .kodawari-item:hover .kodawari-img { opacity: 1; }
+
+    .kodawari-body {
+      padding: 1.8rem 1.6rem;
+    }
+
+    .kodawari-num {
+      display: block;
+      font-size: 0.6rem;
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .kodawari-item h3 {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      margin-bottom: 0.7rem;
+    }
+
+    .kodawari-item p {
+      font-size: 0.78rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── MENU ───────────────────────────────────────────────── */
+    #menu { background: var(--bg-mid); }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .menu-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .menu-card:hover {
+      border-color: rgba(197,160,90,0.45);
+      transform: translateY(-3px);
+    }
+
+    .menu-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+
+    .menu-card:hover .menu-card-img { opacity: 1; }
+
+    .menu-card-body {
+      padding: 1.4rem 1.2rem;
+    }
+
+    .menu-card-en {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card-body h3 {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card-body p {
+      font-size: 0.75rem;
+      color: var(--text-mid);
+      line-height: 1.75;
+      letter-spacing: 0.03em;
+    }
+
+    /* menu price list */
+    .menu-list-wrap {
+      border: 1px solid var(--border);
+      padding: 2.4rem;
+      background: var(--bg-card);
+    }
+
+    .menu-list-wrap h3 {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 1.4rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .menu-list {
+      list-style: none;
+    }
+
+    .menu-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(197,160,90,0.08);
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+    }
+
+    .menu-list li:last-child { border-bottom: none; }
+
+    .menu-list .name { color: var(--text); }
+    .menu-list .price { color: var(--gold-light); font-size: 0.8rem; }
+
+    .menu-note {
+      margin-top: 1.8rem;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── DRINKS ─────────────────────────────────────────────── */
+    #drinks { background: var(--bg); }
+
+    .drinks-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .drinks-img-wrap img {
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .drinks-content h3 {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      margin-bottom: 1rem;
+    }
+
+    .drinks-intro {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 2;
+      letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .drink-list { list-style: none; margin-bottom: 2rem; }
+
+    .drink-item {
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(197,160,90,0.1);
+    }
+
+    .drink-item:first-child { padding-top: 0; }
+
+    .drink-item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.25rem;
+    }
+
+    .drink-name {
+      font-family: var(--font-serif);
+      font-size: 0.88rem;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.05em;
+    }
+
+    .drink-price {
+      font-size: 0.75rem;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+    }
+
+    .drink-meta {
+      font-size: 0.72rem;
+      color: var(--text-mid);
+      letter-spacing: 0.03em;
+    }
+
+    .drinks-other {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.9;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── ACCESS ─────────────────────────────────────────────── */
+    #access { background: var(--bg-mid); }
+
+    .access-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .map-frame {
+      width: 100%;
+      height: 380px;
+      border: 0;
+      display: block;
+      filter: grayscale(30%) contrast(1.05);
+    }
+
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .info-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .info-table tr:first-child { border-top: 1px solid var(--border); }
+
+    .info-table th {
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      font-family: var(--font-serif);
+      font-weight: 400;
+      padding: 1.1rem 0;
+      width: 110px;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+
+    .info-table td {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      padding: 1.1rem 0 1.1rem 1rem;
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+    }
+
+    .info-table td strong {
+      display: block;
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .info-table td small {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .map-open-link {
+      display: inline-block;
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      border: 1px solid var(--gold-rule);
+      padding: 0.4em 1.2em;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .map-open-link:hover { background: var(--gold-dim); color: var(--gold-light); }
+
+    /* ─── INSTAGRAM ──────────────────────────────────────────── */
+    #instagram {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .ig-handle {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      color: var(--gold-light);
+      border: 1px solid var(--gold-rule);
+      padding: 0.9rem 2.2rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .ig-handle:hover {
+      background: var(--gold-dim);
+      border-color: rgba(197,160,90,0.5);
+    }
+
+    .ig-icon {
+      width: 20px; height: 20px;
+      fill: currentColor;
+    }
+
+    .ig-desc {
+      margin-top: 1.6rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      background: #0e0c0a;
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      letter-spacing: 0.22em;
+      color: rgba(232,224,212,0.4);
+      margin-bottom: 1rem;
+    }
+
+    .footer-info {
+      font-size: 0.72rem;
+      color: rgba(232,224,212,0.2);
+      letter-spacing: 0.14em;
+      line-height: 2;
+    }
+
+    .footer-copy {
+      margin-top: 2rem;
+      font-size: 0.65rem;
+      color: rgba(232,224,212,0.15);
+      letter-spacing: 0.12em;
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      section { padding: 5rem 1.4rem; }
+
+      .nav-links, .nav-cta { display: none; }
+      .nav-hamburger { display: flex; }
+
+      /* mobile menu overlay */
+      .mobile-menu {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 150;
+        background: rgba(10,9,8,0.97);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+      }
+      .mobile-menu.open { display: flex; }
+      .mobile-menu a {
+        font-family: var(--font-serif);
+        font-size: 1.2rem;
+        letter-spacing: 0.25em;
+        color: var(--text-mid);
+      }
+      .mobile-menu a:hover { color: var(--gold-light); }
+      .mobile-menu-close {
+        position: absolute;
+        top: 1.4rem; right: 1.6rem;
+        background: none; border: none;
+        color: var(--text-mid);
+        font-size: 1.5rem;
+        cursor: pointer;
+        line-height: 1;
+      }
+
+      .concept-layout,
+      .drinks-layout,
+      .access-layout {
+        grid-template-columns: 1fr;
+        gap: 2.4rem;
+      }
+
+      .concept-img-wrap::before { display: none; }
+      .concept-img-wrap img { height: 280px; }
+      .drinks-img-wrap img { height: 240px; }
+
+      .kodawari-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .menu-grid     { grid-template-columns: 1fr 1fr; }
+
+      .map-frame { height: 280px; }
+    }
+
+    @media (max-width: 480px) {
+      .menu-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── MOBILE MENU ─── -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="メニュー">
+  <button class="mobile-menu-close" id="mobileMenuClose" aria-label="閉じる">&times;</button>
+  <a href="#concept"   onclick="closeMobileMenu()">コンセプト</a>
+  <a href="#kodawari"  onclick="closeMobileMenu()">こだわり</a>
+  <a href="#menu"      onclick="closeMobileMenu()">お品書き</a>
+  <a href="#drinks"    onclick="closeMobileMenu()">ドリンク</a>
+  <a href="#access"    onclick="closeMobileMenu()">アクセス</a>
+  <a href="#instagram" onclick="closeMobileMenu()">Instagram</a>
+</div>
+
+<!-- ─── NAV ─── -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">旬彩 大迫</a>
+    <ul class="nav-links">
+      <li><a href="#concept">コンセプト</a></li>
+      <li><a href="#kodawari">こだわり</a></li>
+      <li><a href="#menu">お品書き</a></li>
+      <li><a href="#drinks">ドリンク</a></li>
+      <li><a href="#access">アクセス</a></li>
+      <li><a href="#instagram">Instagram</a></li>
+    </ul>
+    <a href="#access" class="nav-cta">ご予約</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <img
+    class="hero-img"
+    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1600&q=85&auto=format&fit=crop"
+    alt="居酒屋の雰囲気"
+    loading="eager"
+  >
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">ASAKUSA &nbsp;·&nbsp; IZAKAYA &nbsp;·&nbsp; OPEN 2026</div>
+    <h1 class="hero-title">
+      <span class="ruby">しゅんさい おおさこ</span>
+      <span class="kanji">旬彩&ensp;大迫</span>
+    </h1>
+    <p class="hero-catch">旬を、余すことなく。</p>
+    <div class="hero-scroll" aria-hidden="true">
+      SCROLL
+      <div class="hero-scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONCEPT ─── -->
+<section id="concept">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">CONCEPT</span>
+      <h2>一皿に、季節を映す。</h2>
+      <span class="section-rule"></span>
+    </div>
+    <div class="concept-layout">
+      <div class="concept-img-wrap fade delay-1">
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80&auto=format&fit=crop"
+          alt="旬の料理"
+          loading="lazy"
+        >
+      </div>
+      <div class="concept-text fade delay-2">
+        <p>
+          浅草の空気をまとった夜に、<br>
+          その季節でしか出会えない食材を。
+        </p>
+        <p>
+          市場で丁寧に選んだ旬の素材を、<br>
+          ひと手間かけて仕上げた料理と、<br>
+          厳選したお酒でお迎えします。
+        </p>
+        <p>
+          2026年5月、浅草に産声を上げた<br>
+          「旬彩 大迫」。<br>
+          ゆっくりと流れる時間を、<br>
+          どうぞお楽しみください。
+        </p>
+        <div class="concept-tags">
+          <span class="concept-tag">旬の食材</span>
+          <span class="concept-tag">居酒屋</span>
+          <span class="concept-tag">日本酒</span>
+          <span class="concept-tag">浅草</span>
+          <span class="concept-tag">3F</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── KODAWARI ─── -->
+<section id="kodawari">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">FEATURES</span>
+      <h2>大迫のこだわり</h2>
+      <span class="section-rule"></span>
+    </div>
+    <div class="kodawari-grid">
+      <div class="kodawari-item fade delay-1">
+        <img
+          class="kodawari-img"
+          src="https://images.unsplash.com/photo-1534482421-64566f976cfa?w=600&q=80&auto=format&fit=crop"
+          alt="旬の素材"
+          loading="lazy"
+        >
+        <div class="kodawari-body">
+          <span class="kodawari-num">01</span>
+          <h3>旬の素材</h3>
+          <p>その日の市場で選んだ食材だけを使います。メニューは仕入れによって日々変わります。</p>
+        </div>
+      </div>
+      <div class="kodawari-item fade delay-2">
+        <img
+          class="kodawari-img"
+          src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=600&q=80&auto=format&fit=crop"
+          alt="厳選した日本酒"
+          loading="lazy"
+        >
+        <div class="kodawari-body">
+          <span class="kodawari-num">02</span>
+          <h3>厳選した日本酒・焼酎</h3>
+          <p>料理に寄り添うお酒を全国の蔵元から厳選。季節ごとに銘柄を入れ替えています。</p>
+        </div>
+      </div>
+      <div class="kodawari-item fade delay-3">
+        <img
+          class="kodawari-img"
+          src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80&auto=format&fit=crop"
+          alt="浅草の空間"
+          loading="lazy"
+        >
+        <div class="kodawari-body">
+          <span class="kodawari-num">03</span>
+          <h3>浅草の夜の空間</h3>
+          <p>TIビル3F。浅草の喧騒から少し離れた静かな空間で、ゆったりとお過ごしいただけます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── MENU ─── -->
+<section id="menu">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">MENU</span>
+      <h2>お品書き</h2>
+      <span class="section-rule"></span>
+    </div>
+
+    <div class="menu-grid" style="margin-bottom: 3rem;">
+      <div class="menu-card fade delay-1">
+        <img
+          class="menu-card-img"
+          src="https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d?w=600&q=80&auto=format&fit=crop"
+          alt="旬の刺身"
+          loading="lazy"
+        >
+        <div class="menu-card-body">
+          <span class="menu-card-en">SASHIMI</span>
+          <h3>旬の刺身</h3>
+          <p>その日仕入れた鮮魚を丁寧に仕立てた一皿。盛り合わせも承ります。</p>
+        </div>
+      </div>
+      <div class="menu-card fade delay-2">
+        <img
+          class="menu-card-img"
+          src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80&auto=format&fit=crop"
+          alt="季節の小鉢"
+          loading="lazy"
+        >
+        <div class="menu-card-body">
+          <span class="menu-card-en">SEASONAL</span>
+          <h3>季節の小鉢</h3>
+          <p>野菜・山菜・豆腐など、旬の素材を使った丁寧な小鉢を数種ご用意します。</p>
+        </div>
+      </div>
+      <div class="menu-card fade delay-3">
+        <img
+          class="menu-card-img"
+          src="https://images.unsplash.com/photo-1563245372-f21724e3856d?w=600&q=80&auto=format&fit=crop"
+          alt="焼き物"
+          loading="lazy"
+        >
+        <div class="menu-card-body">
+          <span class="menu-card-en">GRILLED</span>
+          <h3>焼き物・揚げ物</h3>
+          <p>旬魚の塩焼き、串焼き、季節の天ぷらなど、酒肴にぴったりの一品。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-list-wrap fade">
+      <h3>一品料理（抜粋）</h3>
+      <ul class="menu-list">
+        <li><span class="name">本日の刺身 盛り合わせ</span><span class="price">時価</span></li>
+        <li><span class="name">旬魚の塩焼き</span><span class="price">時価</span></li>
+        <li><span class="name">季節の小鉢 盛り合わせ</span><span class="price">¥880〜</span></li>
+        <li><span class="name">出汁巻き玉子</span><span class="price">¥660</span></li>
+        <li><span class="name">冷奴（国産豆腐）</span><span class="price">¥440</span></li>
+        <li><span class="name">本日の煮物</span><span class="price">時価</span></li>
+        <li><span class="name">〆の一品（ご飯物・麺）</span><span class="price">¥660〜</span></li>
+      </ul>
+      <p class="menu-note">
+        ※ メニューは仕入れ状況により変更になる場合がございます。<br>
+        ※ アレルギーのある方はお気軽にお申し付けください。<br>
+        ※ 表示価格はすべて税込みです。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── DRINKS ─── -->
+<section id="drinks">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">DRINKS</span>
+      <h2>日本酒・ドリンク</h2>
+      <span class="section-rule"></span>
+    </div>
+    <div class="drinks-layout">
+      <div class="drinks-img-wrap fade delay-1">
+        <img
+          src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800&q=80&auto=format&fit=crop"
+          alt="日本酒"
+          loading="lazy"
+        >
+      </div>
+      <div class="fade delay-2">
+        <h3>全国の蔵元から、<br>季節の一本を。</h3>
+        <p class="drinks-intro">
+          料理の邪魔をしない、でも確かな存在感のある日本酒を厳選しています。
+          仕入れによって銘柄は変わります。その日だけの出会いをお楽しみください。
+        </p>
+
+        <ul class="drink-list">
+          <li class="drink-item">
+            <div class="drink-item-head">
+              <span class="drink-name">季節の純米吟醸</span>
+              <span class="drink-price">グラス ¥880〜</span>
+            </div>
+            <span class="drink-meta">仕入れにより産地・銘柄が変わります</span>
+          </li>
+          <li class="drink-item">
+            <div class="drink-item-head">
+              <span class="drink-name">本日の特選一本</span>
+              <span class="drink-price">グラス ¥1,100〜</span>
+            </div>
+            <span class="drink-meta">店主が厳選した季節の銘柄</span>
+          </li>
+          <li class="drink-item">
+            <div class="drink-item-head">
+              <span class="drink-name">本格焼酎（芋・麦・そば）</span>
+              <span class="drink-price">グラス ¥660〜</span>
+            </div>
+            <span class="drink-meta">ロック・水割り・お湯割りにて</span>
+          </li>
+          <li class="drink-item">
+            <div class="drink-item-head">
+              <span class="drink-name">梅酒・果実酒</span>
+              <span class="drink-price">グラス ¥660〜</span>
+            </div>
+            <span class="drink-meta">自家製を含む季節のラインナップ</span>
+          </li>
+        </ul>
+
+        <p class="drinks-other">
+          生ビール・ハイボール・チューハイ・ノンアルコールドリンクもご用意しています。<br>
+          銘柄・ラインナップは時期により変わります。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── ACCESS ─── -->
+<section id="access">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">ACCESS &amp; INFO</span>
+      <h2>ご予約・アクセス</h2>
+      <span class="section-rule"></span>
+    </div>
+    <div class="access-layout">
+      <div class="fade delay-1">
+        <iframe
+          class="map-frame"
+          src="https://maps.google.com/maps?q=東京都台東区浅草1-43-7&z=17&output=embed&hl=ja"
+          title="旬彩 大迫 地図"
+          loading="lazy"
+          allowfullscreen
+        ></iframe>
+        <a
+          class="map-open-link"
+          href="https://maps.google.com/?q=東京都台東区浅草1-43-7+TIビル3F"
+          target="_blank"
+          rel="noopener"
+        >Google マップで開く</a>
+      </div>
+      <div class="fade delay-2">
+        <table class="info-table">
+          <tr>
+            <th>店名</th>
+            <td><strong>旬彩 大迫</strong></td>
+          </tr>
+          <tr>
+            <th>住所</th>
+            <td>
+              <strong>〒111-0032</strong>
+              東京都台東区浅草1-43-7<br>TIビル 3F
+            </td>
+          </tr>
+          <tr>
+            <th>アクセス</th>
+            <td>
+              東京メトロ銀座線「浅草駅」より徒歩約5分<br>
+              都営浅草線「浅草駅」より徒歩約5分<br>
+              つくばEXP「浅草駅」より徒歩約5分
+            </td>
+          </tr>
+          <tr>
+            <th>営業時間</th>
+            <td>
+              <strong>17:00 〜 翌2:00&emsp;L.O. 翌1:00</strong>
+              祝日 17:00 〜 23:00&emsp;L.O. 22:00
+            </td>
+          </tr>
+          <tr>
+            <th>定休日</th>
+            <td><strong>日曜日</strong></td>
+          </tr>
+          <tr>
+            <th>お問い合わせ</th>
+            <td>
+              Instagram DM よりお気軽にどうぞ<br>
+              <small>@asakusa_shunsai_oosako</small>
+            </td>
+          </tr>
+          <tr>
+            <th>開業</th>
+            <td>2026年5月13日</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── INSTAGRAM ─── -->
+<section id="instagram">
+  <div class="section-inner">
+    <div class="section-head fade">
+      <span class="section-en">INSTAGRAM</span>
+      <h2>最新情報はこちらから</h2>
+      <span class="section-rule"></span>
+    </div>
+    <div class="fade delay-1">
+      <p style="font-size:0.82rem;color:var(--text-mid);letter-spacing:0.1em;margin-bottom:1.8rem;">
+        営業日・仕入れ情報・旬のお料理はInstagramにて随時発信しています。
+      </p>
+      <a
+        class="ig-handle"
+        href="https://www.instagram.com/asakusa_shunsai_oosako"
+        target="_blank"
+        rel="noopener"
+        aria-label="Instagramを開く"
+      >
+        <svg class="ig-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        @asakusa_shunsai_oosako
+      </a>
+      <p class="ig-desc">フォローしてお待ちください</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p class="footer-logo">旬彩 大迫</p>
+  <p class="footer-info">
+    東京都台東区浅草1-43-7 TIビル 3F<br>
+    Instagram: @asakusa_shunsai_oosako
+  </p>
+  <p class="footer-copy">© 2026 旬彩 大迫. All rights reserved.</p>
+</footer>
+
+<!-- ─── JAVASCRIPT ─── -->
+<script>
+  /* --- NAV scrolled class --- */
+  const nav = document.getElementById('nav');
+  let lastScroll = 0;
+
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    if (y > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
+    lastScroll = y;
+  }, { passive: true });
+
+  /* --- Mobile menu --- */
+  const hamburger    = document.getElementById('hamburger');
+  const mobileMenu   = document.getElementById('mobileMenu');
+  const mobileClose  = document.getElementById('mobileMenuClose');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  mobileClose.addEventListener('click', closeMobileMenu);
+  mobileMenu.addEventListener('click', (e) => {
+    if (e.target === mobileMenu) closeMobileMenu();
+  });
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  /* --- IntersectionObserver fade-in --- */
+  const fadeEls = document.querySelectorAll('.fade');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  fadeEls.forEach(el => observer.observe(el));
+
+  /* --- Smooth scroll for anchor links --- */
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const target = document.querySelector(link.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const offset = target.getBoundingClientRect().top + window.scrollY - 64;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
